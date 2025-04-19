@@ -1,0 +1,16 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "files.associations": {
+            "main.h": "c",
+            "arm_math.h": "c",
+            "pid.h": "c",
+            "stm32f4xx_hal.h": "c"
+        }
+    },
+    "extensions": {}
+}
