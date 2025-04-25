@@ -105,6 +105,7 @@ int main(void)
   MX_UART5_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim5);
+  VOFA_Init();
   /* USER CODE END 2 */
 
   /* Init scheduler */

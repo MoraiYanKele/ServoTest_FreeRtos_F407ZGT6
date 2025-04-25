@@ -22,7 +22,7 @@ void VOFA_RxCallBack_Task(void *argument)
 
 void VOFA_Task(void *argument)
 {
-  VOFA_Init();
+  
   vTaskDelay(pdMS_TO_TICKS(10));
 
   VOFA_RegisterData_float("targetPosX", &targetPosX);
