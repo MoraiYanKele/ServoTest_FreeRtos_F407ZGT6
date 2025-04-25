@@ -35,6 +35,9 @@ typedef struct MotorTypeDef
     float PWMForSpeed; // 设定的速度
     int lastSpeed;
 
+    float targetSpeed; // 目标速度
+    float position; // 位置，单位mm
+
     // 编码器在定时器周期内的计数，可以抽象理解为速度？？？
     short encoder;
 

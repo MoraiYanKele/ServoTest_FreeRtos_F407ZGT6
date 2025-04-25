@@ -21,15 +21,7 @@ extern TaskHandle_t Motor2_TaskHandle;
 extern TaskHandle_t Motor3_TaskHandle;
 extern TaskHandle_t Motor4_TaskHandle;
 
-extern float targetSpeed1;
-extern float targetSpeed2;
-extern float targetSpeed3;
-extern float targetSpeed4;
 
-extern float position1;
-extern float position2;
-extern float position3;
-extern float position4;
 
 void MotorPIDTest_Task(void *argument);
 // void MotorEncoder_Task(void *argument);

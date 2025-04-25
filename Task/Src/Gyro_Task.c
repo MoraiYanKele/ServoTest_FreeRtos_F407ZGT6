@@ -12,8 +12,6 @@ int16_t yaw = 0;
 
 void Gyro_Task(void *argument)
 {
-  VOFA_Init();
-  // Initialize the gyro sensor
 
   HAL_UART_Receive_DMA(&huart5, receiveData, 11);
   while (1)

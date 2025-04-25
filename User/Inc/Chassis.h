@@ -42,22 +42,21 @@ typedef struct ChassisTypeDef
 
   ChassisSpeedTypeDef *chassisSpeed;
   WheelSpeedTypedef *wheelSpeed;
+  ChassisDistanceTypeDef *chassisDistance;
 
   PIDControllerTypedef *positionPidX;
   PIDControllerTypedef *positionPidY;
+
+  float targetPosX;
+  float targetPosY;
     
 } ChassisTypeDef;
 
-
-void OmniWheelKinematics(ChassisSpeedTypeDef* input, WheelSpeedTypedef* output);
-void SetChassisSpeed(WheelSpeedTypedef* wheelSpeed);
-void GetDistance(ChassisDistanceTypeDef* chassisDistance);
-void Chassis_Init();
+void Chassis_Init(ChassisTypeDef* chassis);
+void OmniWheelKinematics(ChassisTypeDef* chassis);
+void SetChassisSpeed(ChassisTypeDef* chassis);
+void GetDistance(ChassisTypeDef* chassis);
 void Chassis_GetEncoder(ChassisTypeDef* chassis);
 
-
-extern ChassisSpeedTypeDef chassisSpeed;
-extern WheelSpeedTypedef wheelSpeed;
-extern ChassisDistanceTypeDef chassisDistance;
 
 #endif

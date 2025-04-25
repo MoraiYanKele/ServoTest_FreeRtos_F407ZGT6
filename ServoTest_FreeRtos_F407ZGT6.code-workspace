@@ -4,6 +4,18 @@
             "path": "."
         }
     ],
-    "settings": {},
+    "settings": {
+        "files.associations": {
+            "vofa_task.h": "c",
+            "chassis.h": "c",
+            "chassis_task.h": "c",
+            "freertos.h": "c",
+            "pid.h": "c",
+            "type_traits": "c",
+            "cstddef": "c",
+            "limits": "c",
+            "motor_task.h": "c"
+        }
+    },
     "extensions": {}
 }

@@ -21,44 +21,75 @@ ChassisDistanceTypeDef chassisDistance =
   .distanceY = 0
 };
 
-void Chassis_Init()
-{
-  chassisSpeed.vX = 0;
-  chassisSpeed.vY = 0;
 
-  chassisDistance.distanceX = 0;
-  chassisDistance.distanceY = 0;
+PIDControllerTypedef positionPidForX;
+PIDControllerTypedef positionPidForY;
+
+ChassisTypeDef chassis = 
+{
+  .motorA = &motor1,
+  .motorB = &motor2,
+  .motorC = &motor3,
+  .motorD = &motor4,
   
-  wheelSpeed.vA = 0;
-  wheelSpeed.vB = 0;
-  wheelSpeed.vC = 0;
-  wheelSpeed.vD = 0;
+  .chassisSpeed = &chassisSpeed,
+  .wheelSpeed = &wheelSpeed,
+  .chassisDistance = &chassisDistance,
+
+  .positionPidX = &positionPidForX,
+  .positionPidY = &positionPidForY
+};
+
+void Chassis_Init(ChassisTypeDef* chassis)
+{
+
+  chassis->targetPosX = 0;
+  chassis->targetPosY = 0;
+
+  chassis->motorA->targetSpeed = 0;
+  chassis->motorB->targetSpeed = 0;
+  chassis->motorC->targetSpeed = 0;
+  chassis->motorD->targetSpeed = 0;
+
+  chassis->motorA->position = 0;
+  chassis->motorB->position = 0;
+  chassis->motorC->position = 0;
+  chassis->motorD->position = 0;
+
+  chassis->chassisSpeed->vX = 0;
+  chassis->chassisSpeed->vY = 0;
+  chassis->chassisSpeed->vW = 0;
+
+  chassis->wheelSpeed->vA = 0;
+  chassis->wheelSpeed->vB = 0;
+  chassis->wheelSpeed->vC = 0;
+  chassis->wheelSpeed->vD = 0;
 }
 
-void OmniWheelKinematics(ChassisSpeedTypeDef* input, WheelSpeedTypedef* output)
+void OmniWheelKinematics(ChassisTypeDef* chassis)
 {
-  float vX = input->vX;
-  float vY = input->vY;
-  float vW = input->vW;
+  float vX = chassis->chassisSpeed->vX;
+  float vY = chassis->chassisSpeed->vY;
+  float vW = chassis->chassisSpeed->vW;
 
-  output->vA = -vX;
-  output->vB = -vY;
-  output->vC = vX;
-  output->vD = vY;
+  chassis->wheelSpeed->vA = -vX;
+  chassis->wheelSpeed->vA = -vY;
+  chassis->wheelSpeed->vA = vX;
+  chassis->wheelSpeed->vA = vY;
 }
 
-void SetChassisSpeed(WheelSpeedTypedef* wheelSpeed)
+void SetChassisSpeed(ChassisTypeDef* chassis)
 {
-  targetSpeed1 = wheelSpeed->vA;
-  targetSpeed2 = wheelSpeed->vB;
-  targetSpeed3 = wheelSpeed->vC;
-  targetSpeed4 = wheelSpeed->vD;
+  chassis->motorA->targetSpeed = -PIDCompute(chassis->positionPidX, -chassis->motorA->position, chassis->targetPosX);
+  chassis->motorB->targetSpeed = -PIDCompute(chassis->positionPidY, -chassis->motorB->position, chassis->targetPosY);
+  chassis->motorC->targetSpeed = PIDCompute(chassis->positionPidX, chassis->motorC->position, chassis->targetPosX);
+  chassis->motorD->targetSpeed = PIDCompute(chassis->positionPidY, chassis->motorD->position, chassis->targetPosY);
 }
 
-void GetDistance(ChassisDistanceTypeDef* chassisDistance)
+void GetDistance(ChassisTypeDef* chassis)
 {
-  chassisDistance->distanceX = (-position1 + position3) / 2; // 左前 + 右后
-  chassisDistance->distanceY = (-position2 + position4) / 2; // 右前 + 左后
+  chassis->chassisDistance->distanceX = (-chassis->motorA->position + chassis->motorC->position) / 2;
+  chassis->chassisDistance->distanceY = (-chassis->motorB->position + chassis->motorD->position) / 2; 
 }
 void Chassis_GetEncoder(ChassisTypeDef* chassis)
 {

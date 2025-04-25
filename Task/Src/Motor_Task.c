@@ -76,15 +76,15 @@ MotorTypeDef motor4 =
   .speedPid = &speedPidForMotor4
 };
 
-float targetSpeed1 = 0.0f;
-float targetSpeed2 = 0.0f;
-float targetSpeed3 = 0.0f;
-float targetSpeed4 = 0.0f;
+// float targetSpeed1 = 0.0f;
+// float targetSpeed2 = 0.0f;
+// float targetSpeed3 = 0.0f;
+// float targetSpeed4 = 0.0f;
 
-float position1 = 0.0f;
-float position2 = 0.0f;
-float position3 = 0.0f;
-float position4 = 0.0f;
+// float position1 = 0.0f;
+// float position2 = 0.0f;
+// float position3 = 0.0f;
+// float position4 = 0.0f;
 
 
 
@@ -105,86 +105,68 @@ void MotorPIDTest_Task(void *argument)
 
 void Moto1_Task(void *argument)
 {
-  // 初始化绝对时间变量
-  TickType_t xLastWakeTime;
-  const TickType_t xPeriod = pdMS_TO_TICKS(10);  // 10ms周期
   Motor_Init(&motor1);
   SpeedPID_Init(&motor1, 1.5, 10, 0.0);
-
-  xLastWakeTime = xTaskGetTickCount();
   while (1)
   {
-    vTaskDelayUntil(&xLastWakeTime, xPeriod);
-
-    motor1.speed = (float)(motor1.encoder) * SPEED_FACTOR;
-    position1 += (float)(motor1.encoder) * DISTENCE_FACTOR; // 计算位置，单位为mm
-    PIDSetSpeed(&motor1, targetSpeed1);
+    uint32_t notificationValue = ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+    if (notificationValue > 0)
+    {
+      motor1.speed = (float)(motor1.encoder) * SPEED_FACTOR;
+      motor1.position += (float)(motor1.encoder) * DISTENCE_FACTOR; // 计算位置，单位为mm
+      PIDSetSpeed(&motor1, motor1.targetSpeed);
+    };
   }
 }
 
 void Moto2_Task(void *argument)
 {
   // 初始化绝对时间变量
-  TickType_t xLastWakeTime;
-  const TickType_t xPeriod = pdMS_TO_TICKS(10);  // 10ms周期
-
-  vTaskDelay(pdMS_TO_TICKS(2));
-
   Motor_Init(&motor2);
   SpeedPID_Init(&motor2, 1.5, 10, 0.0);
-
-  xLastWakeTime = xTaskGetTickCount();
   while (1)
   {
-    vTaskDelayUntil(&xLastWakeTime, xPeriod);
-
-    motor2.speed = (float)(motor2.encoder) * SPEED_FACTOR;
-    position2 += (float)(motor2.encoder) * DISTENCE_FACTOR; // 计算位置，单位为mm
-    PIDSetSpeed(&motor2, targetSpeed2);
+    uint32_t notificationValue = ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+    if (notificationValue > 0)
+    {
+      motor2.speed = (float)(motor2.encoder) * SPEED_FACTOR;
+      motor1.position += (float)(motor2.encoder) * DISTENCE_FACTOR; // 计算位置，单位为mm
+      PIDSetSpeed(&motor2, motor2.targetSpeed);
+    };
   }
 }
 
 void Moto3_Task(void *argument)
 {
   // 初始化绝对时间变量
-  TickType_t xLastWakeTime;
-  const TickType_t xPeriod = pdMS_TO_TICKS(10);  // 10ms周期
-
-  vTaskDelay(pdMS_TO_TICKS(4));
-  
   Motor_Init(&motor3);
   SpeedPID_Init(&motor3, 1.5, 10, 0.0);
-
-  xLastWakeTime = xTaskGetTickCount();
   while (1)
   {
-    vTaskDelayUntil(&xLastWakeTime, xPeriod);
-
-    motor3.speed = (float)(motor3.encoder) * SPEED_FACTOR;
-    position3 += (float)(motor3.encoder) * DISTENCE_FACTOR; // 计算位置，单位为mm
-    PIDSetSpeed(&motor3, targetSpeed3);
+    uint32_t notificationValue = ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+    if (notificationValue > 0)
+    {
+      motor3.speed = (float)(motor3.encoder) * SPEED_FACTOR;
+      motor1.position += (float)(motor3.encoder) * DISTENCE_FACTOR; // 计算位置，单位为mm
+      PIDSetSpeed(&motor3, motor3.targetSpeed);
+    };
   }
 }
 
 void Moto4_Task(void *argument)
 {
   // 初始化绝对时间变量
-  TickType_t xLastWakeTime;
-  const TickType_t xPeriod = pdMS_TO_TICKS(10);  // 10ms周期
-
-  vTaskDelay(pdMS_TO_TICKS(6));
-  
   Motor_Init(&motor4);
   SpeedPID_Init(&motor4, 1.5, 10, 0.0);
-
-  xLastWakeTime = xTaskGetTickCount();
   while (1)
   {
-    vTaskDelayUntil(&xLastWakeTime, xPeriod);
-
-    motor4.speed = (float)(motor4.encoder) * SPEED_FACTOR;
-    position4 += (float)(motor4.encoder) * DISTENCE_FACTOR; // 计算位置，单位为mm
-    PIDSetSpeed(&motor4, targetSpeed4);
+    uint32_t notificationValue = ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+    if (notificationValue > 0)
+    {
+      motor4.speed = (float)(motor4.encoder) * SPEED_FACTOR;
+      motor1.position += (float)(motor4.encoder) * DISTENCE_FACTOR; // 计算位置，单位为mm
+      PIDSetSpeed(&motor4, motor4.targetSpeed);
+    };
   }
 }
 

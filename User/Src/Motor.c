@@ -9,6 +9,8 @@ void Motor_Init(MotorTypeDef *self)
     self->lastSpeed = 0;
     self->encoder = 0;
     self->PWMForSpeed = 0;
+    self->targetSpeed = 0;
+    self->position = 0;
 
     // self->SetSpeed = SetSpeed;
     // self->GetEncoder = GetEncoder;

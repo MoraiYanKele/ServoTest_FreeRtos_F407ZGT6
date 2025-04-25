@@ -25,12 +25,14 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "queue.h" // Include FreeRTOS queue definitions
 #include "VOFA.h"
 #include "Motor.h"
 #include "VOFA_Task.h"
 #include "Motor_Task.h"
 #include "Chassis_Task.h"
 #include "Gyro_Task.h"
+#include "VOFAQUeueType.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -50,7 +52,10 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-// TaskHandle_t MotorPIDTest_TaskHandle = NULL;
+TaskHandle_t Init_TaskHandle = NULL;
+
+QueueHandle_t vofaQueue = NULL; // 声明队列句柄
+
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -62,7 +67,13 @@ const osThreadAttr_t defaultTask_attributes = {
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
+void Init_Task(void *argument)
+{
+  HAL_TIM_Base_Start_IT(&htim5);
+  VOFA_Init();
 
+  vTaskDelete(NULL);  
+}
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void *argument);
@@ -74,7 +85,8 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
   * @param  None
   * @retval None
   */
-void MX_FREERTOS_Init(void) {
+void MX_FREERTOS_Init(void) 
+{
   /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
@@ -93,6 +105,7 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
+  vofaQueue = xQueueCreate(10, sizeof(VOFAQueueTypeDef));
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
@@ -101,6 +114,8 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
+  xTaskCreate(Init_Task, "Init_Task", 128, NULL, osPriorityHigh, &Init_TaskHandle);
+
   xTaskCreate(VOFA_RxCallBack_Task, "VOFA_RxCallBack_Task", 256, NULL, osPriorityNormal1, &VOFA_RxCallBack_TaskHandle);
   xTaskCreate(MotorPIDTest_Task, "MotorPIDTest_Task", 512, NULL, osPriorityNormal, &MotorPIDTest_TaskHandle);
   
@@ -110,7 +125,7 @@ void MX_FREERTOS_Init(void) {
   xTaskCreate(Moto4_Task, "Moto4_Task", 256, NULL, osPriorityNormal, &Motor4_TaskHandle);
   xTaskCreate(Chassis_Task, "Chassis_Task", 256, NULL, osPriorityNormal, &Chassis_TaskHandle);
   xTaskCreate(VOFA_Task, "VOFA_Task", 256, NULL, osPriorityNormal, &VOFA_TaskHandle);
-  xTaskCreate(Gyro_Task, "Gyro_Task", 256, NULL, osPriorityNormal, &Gyro_TaskHandle);
+  // xTaskCreate(Gyro_Task, "Gyro_Task", 256, NULL, osPriorityNormal, &Gyro_TaskHandle);
   // xTaskCreate(MotorEncoder_Task, "MotorEncoder_Task", 512, NULL, osPriorityNormal1, &MotorEncoder_TaskHandle);
 
   /* USER CODE END RTOS_THREADS */
@@ -132,7 +147,7 @@ void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
   /* Infinite loop */
-  // VOFA_SendFireWater("ready\n");
+ 
   for(;;)
   {
     osDelay(1);
@@ -142,15 +157,6 @@ void StartDefaultTask(void *argument)
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
-// void VOFATask(void *argument)
-// {
-//   /* Infinite loop */
-//   VOFA_Init();
-//   VOFA_SendFireWater("ready\n");
-//   while (1)
-//   {
-//     vTaskDelay(pdMS_TO_TICKS(500));
-//   }
-// }
+
 /* USER CODE END Application */
 
