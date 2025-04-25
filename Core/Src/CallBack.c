@@ -26,3 +26,14 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
   }
 }
 
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+  BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+  if (huart == &huart5)
+  {
+   
+    vTaskNotifyGiveFromISR(Gyro_TaskHandle, &xHigherPriorityTaskWoken);
+
+    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+  }
+}

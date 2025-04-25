@@ -616,6 +616,11 @@
               <FileType>1</FileType>
               <FilePath>..\User\Src\VOFA.c</FilePath>
             </File>
+            <File>
+              <FileName>Chassis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\Src\Chassis.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -630,6 +635,16 @@
               <FileName>Motor_Task.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Task\Src\Motor_Task.c</FilePath>
+            </File>
+            <File>
+              <FileName>Chassis_Task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Task\Src\Chassis_Task.c</FilePath>
+            </File>
+            <File>
+              <FileName>Gyro_Task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Task\Src\Gyro_Task.c</FilePath>
             </File>
           </Files>
         </Group>

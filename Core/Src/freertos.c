@@ -30,6 +30,7 @@
 #include "VOFA_Task.h"
 #include "Motor_Task.h"
 #include "Chassis_Task.h"
+#include "Gyro_Task.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -100,7 +101,7 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
-  xTaskCreate(VOFA_RxCallBack_Task, "VOFATask", 256, NULL, osPriorityNormal1, &VOFA_RxCallBack_TaskHandle);
+  xTaskCreate(VOFA_RxCallBack_Task, "VOFA_RxCallBack_Task", 256, NULL, osPriorityNormal1, &VOFA_RxCallBack_TaskHandle);
   xTaskCreate(MotorPIDTest_Task, "MotorPIDTest_Task", 512, NULL, osPriorityNormal, &MotorPIDTest_TaskHandle);
   
   xTaskCreate(Moto1_Task, "Moto1_Task", 256, NULL, osPriorityNormal, &Motor1_TaskHandle);
@@ -108,7 +109,8 @@ void MX_FREERTOS_Init(void) {
   xTaskCreate(Moto3_Task, "Moto3_Task", 256, NULL, osPriorityNormal, &Motor3_TaskHandle);
   xTaskCreate(Moto4_Task, "Moto4_Task", 256, NULL, osPriorityNormal, &Motor4_TaskHandle);
   xTaskCreate(Chassis_Task, "Chassis_Task", 256, NULL, osPriorityNormal, &Chassis_TaskHandle);
-  xTaskCreate(VOFA_Task, "VOFATask", 256, NULL, osPriorityNormal, &VOFA_TaskHandle);
+  xTaskCreate(VOFA_Task, "VOFA_Task", 256, NULL, osPriorityNormal, &VOFA_TaskHandle);
+  xTaskCreate(Gyro_Task, "Gyro_Task", 256, NULL, osPriorityNormal, &Gyro_TaskHandle);
   // xTaskCreate(MotorEncoder_Task, "MotorEncoder_Task", 512, NULL, osPriorityNormal1, &MotorEncoder_TaskHandle);
 
   /* USER CODE END RTOS_THREADS */

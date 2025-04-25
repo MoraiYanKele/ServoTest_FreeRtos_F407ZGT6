@@ -13,6 +13,7 @@ typedef struct
 {
     float vX;   // x方向速度（左右）
     float vY;   // y方向速度（前后）
+    float vW;   // 角速度（旋转）
 } ChassisSpeedTypeDef;
 
 typedef struct 

@@ -39,10 +39,14 @@ servotest_freertos_f407zgt6/motor_task.o: ..\Task\Src\Motor_Task.c \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h \
+  ..\Middlewares\ST\ARM\DSP\Inc\arm_math.h \
+  D:\stm32\ARM\ARM_Compiler_5.06u7\ARM\ARMCLANG\Bin\..\include\string.h \
+  D:\stm32\ARM\ARM_Compiler_5.06u7\ARM\ARMCLANG\Bin\..\include\math.h \
+  D:\stm32\ARM\ARM_Compiler_5.06u7\ARM\ARMCLANG\Bin\..\include\float.h \
+  D:\stm32\ARM\ARM_Compiler_5.06u7\ARM\ARMCLANG\Bin\..\include\limits.h \
   ..\User\Inc\Motor.h ..\Core\Inc\dma.h ..\Core\Inc\tim.h \
   ..\Core\Inc\usart.h ..\Core\Inc\gpio.h ..\User\Inc\pid.h \
   ..\User\Inc\VOFA.h \
   D:\stm32\ARM\ARM_Compiler_5.06u7\ARM\ARMCLANG\Bin\..\include\stdio.h \
-  D:\stm32\ARM\ARM_Compiler_5.06u7\ARM\ARMCLANG\Bin\..\include\string.h \
   D:\stm32\ARM\ARM_Compiler_5.06u7\ARM\ARMCLANG\Bin\..\include\stdarg.h \
   ..\Core\Inc\stm32f4xx_it.h ..\User\Inc\Uart_DMA.h

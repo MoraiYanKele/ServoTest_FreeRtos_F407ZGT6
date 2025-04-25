@@ -10,8 +10,19 @@
 #include "VOFA_Task.h"
 #include "Motor_Task.h"
 #include "Chassis.h"
+#include "Chassis_Task.h"
+#include "Gyro_Task.h"
 
 extern TaskHandle_t Chassis_TaskHandle;
+
+extern PIDControllerTypedef positionPidForX;
+extern PIDControllerTypedef positionPidForY;
+extern PIDControllerTypedef positionPidForW;
+
+extern float targetPosX;
+extern float targetPosY;
+extern float targetPosW;
+
 void Chassis_Task(void *argument);
 
 #endif

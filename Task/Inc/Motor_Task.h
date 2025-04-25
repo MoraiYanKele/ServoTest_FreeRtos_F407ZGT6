@@ -9,6 +9,9 @@
 #include "VOFA.h"
 
 extern MotorTypeDef motor1;
+extern MotorTypeDef motor2;
+extern MotorTypeDef motor3;
+extern MotorTypeDef motor4;
 
 extern TaskHandle_t MotorPIDTest_TaskHandle;
 extern TaskHandle_t MotorEncoder_TaskHandle;

@@ -192,8 +192,8 @@ void SpeedPID_Init(MotorTypeDef *motor, float kp, float ki, float kd)
 {
   PID_Init(motor->speedPid, kp, ki, kd);
   PID_SetOutputLimits(motor->speedPid, -100, 100);
-  PID_SetIntegralSeparationThreshold(motor->speedPid, 400);
-  PID_SetIntegralLimits(motor->speedPid, -50, 50);
+  PID_SetIntegralSeparationThreshold(motor->speedPid, 200);
+  PID_SetIntegralLimits(motor->speedPid, -25, 25);
   PID_SetSampleTime(motor->speedPid, 0.01); // 0.01s
   PID_SetMode(motor->speedPid, PID_MODE_POSITION);
 }

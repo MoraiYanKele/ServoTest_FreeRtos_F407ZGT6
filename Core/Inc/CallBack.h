@@ -6,5 +6,6 @@
 #include "tim.h"
 #include "Motor_Task.h"
 #include "VOFA_Task.h"
+#include "Gyro_Task.h"
 
 #endif

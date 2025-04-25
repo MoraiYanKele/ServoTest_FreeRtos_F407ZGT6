@@ -6,6 +6,7 @@
 #include "main.h"
 #include "VOFA.h"
 #include "Chassis.h"
+#include "Gyro_Task.h"
 
 extern TaskHandle_t VOFA_RxCallBack_TaskHandle;
 extern TaskHandle_t VOFA_TaskHandle;

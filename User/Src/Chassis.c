@@ -4,6 +4,7 @@ ChassisSpeedTypeDef chassisSpeed =
 {
   .vX = 0,
   .vY = 0,
+  .vW = 0
 };
 
 WheelSpeedTypedef wheelSpeed = 
@@ -38,6 +39,7 @@ void OmniWheelKinematics(ChassisSpeedTypeDef* input, WheelSpeedTypedef* output)
 {
   float vX = input->vX;
   float vY = input->vY;
+  float vW = input->vW;
 
   output->vA = -vX;
   output->vB = -vY;

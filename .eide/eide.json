@@ -210,6 +210,9 @@
           },
           {
             "path": "User/Src/VOFA.c"
+          },
+          {
+            "path": "User/Src/Chassis.c"
           }
         ],
         "folders": []
@@ -222,6 +225,12 @@
           },
           {
             "path": "Task/Src/Motor_Task.c"
+          },
+          {
+            "path": "Task/Src/Chassis_Task.c"
+          },
+          {
+            "path": "Task/Src/Gyro_Task.c"
           }
         ],
         "folders": []

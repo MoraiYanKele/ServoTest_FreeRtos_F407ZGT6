@@ -16,7 +16,7 @@
 
 #define MOTOR_SPEED_LIMIT       00.0f  // 电机最大速度
 #define SPEED_FACTOR            4.6875f // 
-#define DISTENCE_FACTOR         0.068067 // m/min
+#define DISTENCE_FACTOR         0.1546996
 
 typedef struct MotorTypeDef
 {
