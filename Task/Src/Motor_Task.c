@@ -88,13 +88,14 @@ float position4 = 0.0f;
 
 
 
+
 void MotorPIDTest_Task(void *argument)
 {
   /* Infinite loop */
 
 
   vTaskDelay(pdMS_TO_TICKS(10));
-  HAL_TIM_Base_Start_IT(&htim5);
+  
   while (1)
   {
 
@@ -114,7 +115,7 @@ void Moto1_Task(void *argument)
   while (1)
   {
     vTaskDelayUntil(&xLastWakeTime, xPeriod);
-    GetEncoder(&motor1);
+
     motor1.speed = (float)(motor1.encoder) * SPEED_FACTOR;
     position1 += (float)(motor1.encoder) * DISTENCE_FACTOR; // 计算位置，单位为mm
     PIDSetSpeed(&motor1, targetSpeed1);
@@ -136,7 +137,7 @@ void Moto2_Task(void *argument)
   while (1)
   {
     vTaskDelayUntil(&xLastWakeTime, xPeriod);
-    GetEncoder(&motor2);
+
     motor2.speed = (float)(motor2.encoder) * SPEED_FACTOR;
     position2 += (float)(motor2.encoder) * DISTENCE_FACTOR; // 计算位置，单位为mm
     PIDSetSpeed(&motor2, targetSpeed2);
@@ -158,7 +159,7 @@ void Moto3_Task(void *argument)
   while (1)
   {
     vTaskDelayUntil(&xLastWakeTime, xPeriod);
-    GetEncoder(&motor3);
+
     motor3.speed = (float)(motor3.encoder) * SPEED_FACTOR;
     position3 += (float)(motor3.encoder) * DISTENCE_FACTOR; // 计算位置，单位为mm
     PIDSetSpeed(&motor3, targetSpeed3);
@@ -180,7 +181,7 @@ void Moto4_Task(void *argument)
   while (1)
   {
     vTaskDelayUntil(&xLastWakeTime, xPeriod);
-    GetEncoder(&motor4);
+
     motor4.speed = (float)(motor4.encoder) * SPEED_FACTOR;
     position4 += (float)(motor4.encoder) * DISTENCE_FACTOR; // 计算位置，单位为mm
     PIDSetSpeed(&motor4, targetSpeed4);
@@ -190,10 +191,5 @@ void Moto4_Task(void *argument)
 
 void SpeedPID_Init(MotorTypeDef *motor, float kp, float ki, float kd)
 {
-  PID_Init(motor->speedPid, kp, ki, kd);
-  PID_SetOutputLimits(motor->speedPid, -100, 100);
-  PID_SetIntegralSeparationThreshold(motor->speedPid, 200);
-  PID_SetIntegralLimits(motor->speedPid, -25, 25);
-  PID_SetSampleTime(motor->speedPid, 0.01); // 0.01s
-  PID_SetMode(motor->speedPid, PID_MODE_POSITION);
+  PID_Init(motor->speedPid, kp, ki, kd, 0.01, 100, 25, 0.0f, PID_MODE_POSITION);
 }

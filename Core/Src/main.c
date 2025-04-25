@@ -28,6 +28,7 @@
 /* USER CODE BEGIN Includes */
 #include "Motor.h"
 #include "Motor_Task.h"
+#include "Chassis_Task.h"
 #include "VOFA.h"
 /* USER CODE END Includes */
 
@@ -103,7 +104,7 @@ int main(void)
   MX_TIM8_Init();
   MX_UART5_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_TIM_Base_Start_IT(&htim5);
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -189,20 +190,18 @@ void SystemClock_Config(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
-  //  if (htim == &htim5)
-  //  {
-  //   // VOFA_SendFireWater("motor1 encoder: %d\n", motor1.encoder);
-  //   GetEncoder(&motor1);
-  //   motor1.speed = (float)(motor1.encoder) * SPEED_FACTOR; 
+  if (htim->Instance == TIM5)
+  {
+    TIM5CallBack_Task();
 
-  //  }
+  }
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM6)
   {
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
- 
+
   /* USER CODE END Callback 1 */
 }
 

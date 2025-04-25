@@ -60,3 +60,10 @@ void GetDistance(ChassisDistanceTypeDef* chassisDistance)
   chassisDistance->distanceX = (-position1 + position3) / 2; // 左前 + 右后
   chassisDistance->distanceY = (-position2 + position4) / 2; // 右前 + 左后
 }
+void Chassis_GetEncoder(ChassisTypeDef* chassis)
+{
+  GetEncoder(chassis->motorA);
+  GetEncoder(chassis->motorB);
+  GetEncoder(chassis->motorC);
+  GetEncoder(chassis->motorD);
+}

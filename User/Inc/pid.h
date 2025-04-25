@@ -4,8 +4,25 @@
 #include "main.h"
 
 // PID控制器模式定义
-#define PID_MODE_POSITION 0  // 位置式PID
-#define PID_MODE_DELTA    1  // 增量式PID
+
+#define PID_DEFAULT_OUTPUT_MAX              1000.0f  // 默认PID输出最大值
+#define PID_DEFAULT_OUTPUT_MIN              -1000.0f // 默认PID输出最小值
+#define PID_DEFAULT_INTEGRAL_MAX            500.0f   // 默认PID积分项最大值
+#define PID_DEFAULT_INTEGRAL_MIN            -500.0f  // 默认PID积分项最小值
+#define PID_DEFAULT_DEADBAND                0.0f     // 默认PID死区 (误差绝对值小于此值时不响应)
+#define PID_DEFAULT_INTEGRAL_SEP_THRESH     200.0f   // 默认积分分离阈值 (误差绝对值大于此值时不累积积分)
+#define PID_DEFAULT_DERIV_FILTER_FACTOR     0.8f     // 默认微分项一阶低通滤波系数 (0-1, 越小滤波越强)
+#define PID_DEFAULT_MODE                    PID_MODE_POSITION // 默认PID工作模式 (位置式)
+#define PID_DEFAULT_SAMPLE_TIME             0.01f    // 默认采样时间 (秒)
+#define PID_DEFAULT_INV_SAMPLE_TIME         (1.0f / PID_DEFAULT_SAMPLE_TIME) // 默认采样时间的倒数 (用于优化计算)
+
+
+typedef enum 
+{
+    PID_MODE_POSITION = 0, // 位置式PID
+    PID_MODE_DELTA    = 1  // 增量式PID
+} PIDModeTypedef;
+
 
 typedef struct 
 {
@@ -40,7 +57,7 @@ typedef struct
     float derivativeFilterFactor;
     
     // 控制器工作模式
-    uint8_t mode;        // 0: 位置式PID, 1: 增量式PID
+    PIDModeTypedef mode; // 0: 位置式, 1: 增量式
     
     // 滤波后的微分项(仅内部使用)
     float filteredDerivative;
@@ -53,7 +70,13 @@ typedef struct
 } PIDControllerTypedef;
   
 // 函数声明
-void PID_Init(PIDControllerTypedef *pid, float Kp, float Ki, float Kd);
+
+void PID_Init(PIDControllerTypedef *pid, 
+    float Kp, float Ki, float Kd, 
+    float sampleTime, 
+    float outputlimits, float integralLimits, 
+    float deadBand,
+    PIDModeTypedef mode);
 float PIDCompute(PIDControllerTypedef *pid, float now_Value, float target_Value);
 void PID_SetOutputLimits(PIDControllerTypedef *pid, float min, float max);
 void PID_SetIntegralLimits(PIDControllerTypedef *pid, float min, float max);

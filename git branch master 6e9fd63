@@ -1,0 +1,10 @@
+[33mf2b4153[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{0}: commit: 可以实现基本运动，下来要整体进行重构
+[33m13a2418[m HEAD@{1}: reset: moving to HEAD~
+[33ma034e33[m HEAD@{2}: checkout: moving from a9d1cb56a40408e379c9f1ca4b4ac892b385d1ca to main
+[33ma9d1cb5[m HEAD@{3}: commit: mi
+[33ma034e33[m HEAD@{4}: reset: moving to HEAD~
+[33m6e9fd63[m HEAD@{5}: commit: mi
+[33ma034e33[m HEAD@{6}: checkout: moving from main to a034e33fd4185d9fb9939569e88358618671b921
+[33ma034e33[m HEAD@{7}: checkout: moving from main to main
+[33ma034e33[m HEAD@{8}: commit: 可以实现基本运动，下来要整体进行重构
+[33m13a2418[m HEAD@{9}: commit (initial): 需要重新计算实际距离

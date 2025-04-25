@@ -5,13 +5,30 @@
 
 
 /**
- * @brief  初始化pid结构体
- * @param  PIDControllerTypedef *pid: 要初始化的pid结构体的地址
- * @param  float kp: 初始的比例增益
- * @param  float ki: 初始的积分增益
- * @param  float kd: 初始的微分增益
+ * @brief  初始化PID控制器结构体并设置初始参数。
+ * 
+ * 此函数用于初始化一个 `PIDControllerTypedef` 结构体，设置其初始的
+ * 比例(Kp)、积分(Ki)、微分(Kd)增益，以及采样时间、输出限制、
+ * 积分限制、死区和工作模式。同时，它会将PID控制器的内部状态变量
+ * （如误差、积分累积值、微分值等）重置为零。
+ * 
+ * @param[in,out] pid 指向要初始化的PID控制器结构体 (`PIDControllerTypedef`) 的指针。
+ *                    函数将修改此结构体的内容。
+ * @param[in] Kp 初始比例增益 (Proportional Gain)。决定控制器对当前误差的响应强度。
+ * @param[in] Ki 初始积分增益 (Integral Gain)。决定控制器消除稳态误差的速度和强度。
+ * @param[in] Kd 初始微分增益 (Derivative Gain)。决定控制器对误差变化率的响应，用于预测和抑制过冲。
+ * @param[in] sampleTime 控制器的采样时间，单位为秒。PID计算基于此时间间隔。
+ * @param[in] outputlimits 输出限幅值 (绝对值)。控制器的最终输出将被限制在 [-outputlimits, +outputlimits] 范围内。
+ * @param[in] integralLimits 积分项限幅值 (绝对值)。积分累积值将被限制在 [-integralLimits, +integralLimits] 范围内，防止积分饱和。
+ * @param[in] deadBand 误差死区值。当误差的绝对值小于此值时，控制器可能不响应或减弱响应（具体行为取决于PIDCompute实现）。
+ * @param[in] mode PID工作模式 (`PIDModeTypedef` 枚举类型)。通常包括位置式 (`PID_MODE_POSITION`) 和增量式 (`PID_MODE_DELTA`)。
+ * 
+ * @note   此函数会设置传入的增益、限制和模式，并重置所有内部状态变量为零。
+ * @note   部分参数（如积分分离阈值 `integralSeparationThreshold` 和 
+ *         微分滤波系数 `derivativeFilterFactor`）在此函数中使用了宏定义的默认值。
+ *         如果需要修改这些默认值，请在调用此函数后使用相应的 `PID_Set...` 函数进行设置。
  */
-void PID_Init(PIDControllerTypedef *pid, float Kp, float Ki, float Kd)
+void PID_Init(PIDControllerTypedef *pid, float Kp, float Ki, float Kd,      float sampleTime, float outputlimits, float integralLimits, float deadBand, PIDModeTypedef mode)
 {
   if (pid == NULL)
     return;
@@ -20,6 +37,7 @@ void PID_Init(PIDControllerTypedef *pid, float Kp, float Ki, float Kd)
   pid->Ki = Ki;
   pid->Kd = Kd;
   
+  // 重置内部状态变量
   pid->targetValue = 0.0f;
   pid->error = 0.0f;
   pid->previous_error = 0.0f;
@@ -27,32 +45,38 @@ void PID_Init(PIDControllerTypedef *pid, float Kp, float Ki, float Kd)
   pid->integral = 0.0f;
   pid->derivative = 0.0f;
   pid->filteredDerivative = 0.0f;
-  
-  // 默认输出限制
-  pid->outputMax = 1000.0f;
-  pid->outputMin = -1000.0f;
-  
-  // 默认积分限制
-  pid->integralMax = 500.0f;
-  pid->integralMin = -500.0f;
-  
-  // 默认无死区
-  pid->deadBand = 0.0f;
-  
-  // 默认积分分离阈值
-  pid->integralSeparationThreshold = 200.0f;
-  
-  // 默认微分滤波系数
-  pid->derivativeFilterFactor = 0.8f;
-  
-  // 默认位置式PID
-  pid->mode = PID_MODE_POSITION;
-
-  // 默认采样时间设置为0.01秒(100Hz)
-  pid->sampleTime = 0.01f;
-  pid->invSampleTime = 100.0f;  // 1/0.01 = 100
-
   pid->previous_measurement = 0.0f;
+  
+  // 设置输出限制
+  pid->outputMax = outputlimits;
+  pid->outputMin = -outputlimits;
+  
+  // 设置积分限制
+  pid->integralMax = integralLimits;
+  pid->integralMin = -integralLimits;
+  
+  // 设置死区
+  pid->deadBand = deadBand;
+  
+  // 使用默认值设置积分分离阈值
+  pid->integralSeparationThreshold = PID_DEFAULT_INTEGRAL_SEP_THRESH;
+  
+  // 使用默认值设置微分滤波系数
+  pid->derivativeFilterFactor = PID_DEFAULT_DERIV_FILTER_FACTOR;
+  
+  // 设置工作模式
+  pid->mode = mode;
+
+  // 设置采样时间及其倒数
+  pid->sampleTime = sampleTime;
+  if (sampleTime > 0.0f) 
+  { // 防止除以零
+    pid->invSampleTime = 1.0f / sampleTime;
+  } 
+  else 
+  {
+    pid->invSampleTime = 0.0f; // 或者设置为一个安全的值或报错
+  }
 }
 
 /**
