@@ -100,6 +100,20 @@ void VOFA_SendJustFloat(int length, ...)
     
     VOFA_UART_SEND(UART_TO_VOFA, txData, length * sizeof(float) + 4);
 }
+void VOFA_SendJustFloat_Queue(float *data, uint16_t length)
+{
+    uint8_t txData[64];
+
+    for (int i = 0; i < length; i++)
+    {
+        memcpy(txData + i * sizeof(float), &data[i], sizeof(float));
+    }
+    const uint8_t tail[4] = {0x00, 0x00, 0x80, 0x7F};
+    memcpy(txData + length * sizeof(float), tail, 4);
+    
+    VOFA_UART_SEND(UART_TO_VOFA, txData, length * sizeof(float) + 4);
+}
+
 
 /**
   * @brief  发送FireWater格式数据

@@ -1,4 +1,5 @@
-servotest_freertos_f407zgt6/freertos.o: ..\Core\Src\freertos.c \
+servotest_freertos_f407zgt6/cmd_task.o: ..\Task\Src\Cmd_Task.c \
+  ..\Task\Inc\Cmd_Task.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\FreeRTOS.h \
   D:\stm32\ARM\ARM_Compiler_5.06u7\ARM\ARMCLANG\Bin\..\include\stddef.h \
   D:\stm32\ARM\ARM_Compiler_5.06u7\ARM\ARMCLANG\Bin\..\include\stdint.h \
@@ -43,14 +44,14 @@ servotest_freertos_f407zgt6/freertos.o: ..\Core\Src\freertos.c \
   D:\stm32\ARM\ARM_Compiler_5.06u7\ARM\ARMCLANG\Bin\..\include\math.h \
   D:\stm32\ARM\ARM_Compiler_5.06u7\ARM\ARMCLANG\Bin\..\include\float.h \
   D:\stm32\ARM\ARM_Compiler_5.06u7\ARM\ARMCLANG\Bin\..\include\limits.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\include\queue.h \
-  ..\User\Inc\VOFA.h ..\Core\Inc\usart.h ..\Core\Inc\gpio.h \
+  ..\User\Inc\Motor.h ..\Core\Inc\dma.h ..\Core\Inc\tim.h \
+  ..\Core\Inc\usart.h ..\Core\Inc\gpio.h ..\User\Inc\pid.h \
+  ..\User\Inc\VOFA.h \
   D:\stm32\ARM\ARM_Compiler_5.06u7\ARM\ARMCLANG\Bin\..\include\stdio.h \
   D:\stm32\ARM\ARM_Compiler_5.06u7\ARM\ARMCLANG\Bin\..\include\stdarg.h \
-  ..\Core\Inc\stm32f4xx_it.h ..\User\Inc\Uart_DMA.h ..\Core\Inc\dma.h \
-  ..\User\Inc\Motor.h ..\Core\Inc\tim.h ..\User\Inc\pid.h \
-  ..\Task\Inc\VOFA_Task.h ..\User\Inc\Chassis.h ..\Task\Inc\Motor_Task.h \
+  ..\Core\Inc\stm32f4xx_it.h ..\User\Inc\Uart_DMA.h \
+  ..\Task\Inc\VOFA_Task.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\queue.h \
+  ..\User\Inc\Chassis.h ..\Task\Inc\Motor_Task.h \
   ..\Core\Inc\ProjectHeader.h ..\Task\Inc\Chassis_Task.h \
   ..\Task\Inc\Gyro_Task.h ..\Task\Inc\VOFAQUeueType.h

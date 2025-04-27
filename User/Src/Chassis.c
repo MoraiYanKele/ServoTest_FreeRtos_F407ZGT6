@@ -64,6 +64,11 @@ void Chassis_Init(ChassisTypeDef* chassis)
   chassis->wheelSpeed->vB = 0;
   chassis->wheelSpeed->vC = 0;
   chassis->wheelSpeed->vD = 0;
+
+  chassis->chassisDistance->distanceX = 0;
+  chassis->chassisDistance->distanceY = 0;
+
+  chassis->softStartFactor = 0.0f; // 软启动系数
 }
 
 void OmniWheelKinematics(ChassisTypeDef* chassis)
@@ -80,15 +85,20 @@ void OmniWheelKinematics(ChassisTypeDef* chassis)
 
 void SetChassisSpeed(ChassisTypeDef* chassis)
 {
-  chassis->motorA->targetSpeed = -PIDCompute(chassis->positionPidX, -chassis->motorA->position, chassis->targetPosX);
-  chassis->motorB->targetSpeed = -PIDCompute(chassis->positionPidY, -chassis->motorB->position, chassis->targetPosY);
-  chassis->motorC->targetSpeed = PIDCompute(chassis->positionPidX, chassis->motorC->position, chassis->targetPosX);
-  chassis->motorD->targetSpeed = PIDCompute(chassis->positionPidY, chassis->motorD->position, chassis->targetPosY);
+  float pidoutputTargetSpeedA = PIDCompute(chassis->positionPidX, chassis->motorA->position, chassis->targetPosX);
+  float pidoutputTargetSpeedB = -PIDCompute(chassis->positionPidY, -chassis->motorB->position, chassis->targetPosY);
+  float pidoutputTargetSpeedC = -PIDCompute(chassis->positionPidX, -chassis->motorC->position, chassis->targetPosX);
+  float pidoutputTargetSpeedD = PIDCompute(chassis->positionPidY, chassis->motorD->position, chassis->targetPosY);
+
+  chassis->motorA->targetSpeed = pidoutputTargetSpeedA * chassis->softStartFactor;
+  chassis->motorB->targetSpeed = pidoutputTargetSpeedB * chassis->softStartFactor;
+  chassis->motorC->targetSpeed = pidoutputTargetSpeedC * chassis->softStartFactor;
+  chassis->motorD->targetSpeed = pidoutputTargetSpeedD * chassis->softStartFactor;
 }
 
 void GetDistance(ChassisTypeDef* chassis)
 {
-  chassis->chassisDistance->distanceX = (-chassis->motorA->position + chassis->motorC->position) / 2;
+  chassis->chassisDistance->distanceX = (chassis->motorA->position - chassis->motorC->position) / 2;
   chassis->chassisDistance->distanceY = (-chassis->motorB->position + chassis->motorD->position) / 2; 
 }
 void Chassis_GetEncoder(ChassisTypeDef* chassis)

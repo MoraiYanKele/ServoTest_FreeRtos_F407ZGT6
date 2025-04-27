@@ -7,6 +7,7 @@
 #include "Motor.h"
 #include "pid.h"
 #include "VOFA.h"
+#include "ProjectHeader.h"
 
 extern MotorTypeDef motor1;
 extern MotorTypeDef motor2;

@@ -3,6 +3,8 @@
 
 TaskHandle_t VOFA_RxCallBack_TaskHandle = NULL;
 TaskHandle_t VOFA_TaskHandle = NULL;
+extern QueueHandle_t vofaQueue; // 声明队列句柄
+
 
 void VOFA_RxCallBack_Task(void *argument)
 {
@@ -21,14 +23,14 @@ void VOFA_RxCallBack_Task(void *argument)
 
 void VOFA_Task(void *argument)
 {
-  vTaskDelay(pdMS_TO_TICKS(10));
-
-
+  VOFA_SendFireWater("ready\n"); // 发送准备就绪指令
   while (1)
   {
-   
-
-    vTaskDelay(pdMS_TO_TICKS(10));
+    VOFAQueueTypeDef vofaQueueReceive;
+    if (xQueueReceive(vofaQueue, &vofaQueueReceive, portMAX_DELAY) == pdTRUE)
+    {
+      VOFA_SendJustFloat_Queue(vofaQueueReceive.data, vofaQueueReceive.dataLength); // 发送数据
+    }
   }
 }
 

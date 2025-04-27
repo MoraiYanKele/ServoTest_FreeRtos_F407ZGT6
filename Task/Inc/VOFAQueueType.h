@@ -2,8 +2,9 @@
 #define __VOFAQUEUETYPES_H__
 
 #include "Vofa_Task.h"
+#include "ProjectHeader.h"
 
-#define VOFA_MAX_CHANNELS 16 // 最大通道数
+#define VOFA_MAX_CHANNELS 64 // 最大通道数
 
 typedef struct VOFAQueueTypeDef
 {

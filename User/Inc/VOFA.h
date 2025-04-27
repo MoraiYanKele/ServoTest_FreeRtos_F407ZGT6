@@ -38,6 +38,7 @@ typedef struct
 
 void VOFA_Init();
 void VOFA_SendJustFloat(int length, ...);
+void VOFA_SendJustFloat_Queue(float *data, uint16_t length);
 void VOFA_SendFireWater(const char *format, ...);
 void VOFA_RegisterData_float(const char *name, float *data);
 void VOFA_RegisterData_int(const char *name, int *data);

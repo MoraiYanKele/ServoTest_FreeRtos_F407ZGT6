@@ -49,4 +49,8 @@ servotest_freertos_f407zgt6/chassis.o: ..\User\Src\Chassis.c \
   ..\Task\Inc\Motor_Task.h ..\User\Inc\VOFA.h \
   D:\stm32\ARM\ARM_Compiler_5.06u7\ARM\ARMCLANG\Bin\..\include\stdio.h \
   D:\stm32\ARM\ARM_Compiler_5.06u7\ARM\ARMCLANG\Bin\..\include\stdarg.h \
-  ..\Core\Inc\stm32f4xx_it.h ..\User\Inc\Uart_DMA.h
+  ..\Core\Inc\stm32f4xx_it.h ..\User\Inc\Uart_DMA.h \
+  ..\Core\Inc\ProjectHeader.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\queue.h \
+  ..\Task\Inc\VOFA_Task.h ..\Task\Inc\Gyro_Task.h \
+  ..\Task\Inc\Chassis_Task.h ..\Task\Inc\VOFAQUeueType.h

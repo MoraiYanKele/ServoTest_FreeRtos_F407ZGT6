@@ -33,6 +33,7 @@
 #include "Chassis_Task.h"
 #include "Gyro_Task.h"
 #include "VOFAQUeueType.h"
+#include "ProjectHeader.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -85,8 +86,7 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
   * @param  None
   * @retval None
   */
-void MX_FREERTOS_Init(void) 
-{
+void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
@@ -117,14 +117,16 @@ void MX_FREERTOS_Init(void)
   xTaskCreate(Init_Task, "Init_Task", 128, NULL, osPriorityHigh, &Init_TaskHandle);
 
   xTaskCreate(VOFA_RxCallBack_Task, "VOFA_RxCallBack_Task", 256, NULL, osPriorityNormal1, &VOFA_RxCallBack_TaskHandle);
-  xTaskCreate(MotorPIDTest_Task, "MotorPIDTest_Task", 512, NULL, osPriorityNormal, &MotorPIDTest_TaskHandle);
-  
+
   xTaskCreate(Moto1_Task, "Moto1_Task", 256, NULL, osPriorityNormal, &Motor1_TaskHandle);
   xTaskCreate(Moto2_Task, "Moto2_Task", 256, NULL, osPriorityNormal, &Motor2_TaskHandle);
   xTaskCreate(Moto3_Task, "Moto3_Task", 256, NULL, osPriorityNormal, &Motor3_TaskHandle);
   xTaskCreate(Moto4_Task, "Moto4_Task", 256, NULL, osPriorityNormal, &Motor4_TaskHandle);
+
   xTaskCreate(Chassis_Task, "Chassis_Task", 256, NULL, osPriorityNormal, &Chassis_TaskHandle);
   xTaskCreate(VOFA_Task, "VOFA_Task", 256, NULL, osPriorityNormal, &VOFA_TaskHandle);
+
+  xTaskCreate(CmdFrom2_4G_Task, "CmdFrom2_4G_Task", 256, NULL, osPriorityNormal, &CmdFrom2_4G_TaskHandle);
   // xTaskCreate(Gyro_Task, "Gyro_Task", 256, NULL, osPriorityNormal, &Gyro_TaskHandle);
   // xTaskCreate(MotorEncoder_Task, "MotorEncoder_Task", 512, NULL, osPriorityNormal1, &MotorEncoder_TaskHandle);
 

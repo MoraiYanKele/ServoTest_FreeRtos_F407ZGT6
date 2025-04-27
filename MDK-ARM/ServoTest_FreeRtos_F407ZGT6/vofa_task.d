@@ -11,6 +11,7 @@ servotest_freertos_f407zgt6/vofa_task.o: ..\Task\Src\VOFA_Task.c \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\mpu_wrappers.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\queue.h \
   ..\Core\Inc\main.h ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h \
   ..\Core\Inc\stm32f4xx_hal_conf.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h \
@@ -49,5 +50,6 @@ servotest_freertos_f407zgt6/vofa_task.o: ..\Task\Src\VOFA_Task.c \
   D:\stm32\ARM\ARM_Compiler_5.06u7\ARM\ARMCLANG\Bin\..\include\stdarg.h \
   ..\Core\Inc\stm32f4xx_it.h ..\User\Inc\Uart_DMA.h ..\Core\Inc\dma.h \
   ..\User\Inc\Chassis.h ..\User\Inc\Motor.h ..\Core\Inc\tim.h \
-  ..\User\Inc\pid.h ..\Task\Inc\Motor_Task.h ..\Task\Inc\Gyro_Task.h \
-  ..\Task\Inc\Chassis_Task.h
+  ..\User\Inc\pid.h ..\Task\Inc\Motor_Task.h ..\Core\Inc\ProjectHeader.h \
+  ..\Task\Inc\Chassis_Task.h ..\Task\Inc\Gyro_Task.h \
+  ..\Task\Inc\VOFAQUeueType.h

@@ -14,7 +14,16 @@
             "type_traits": "c",
             "cstddef": "c",
             "limits": "c",
-            "motor_task.h": "c"
+            "motor_task.h": "c",
+            "vofaqueuetype.h": "c",
+            "vofa.h": "c",
+            "cmsis_os.h": "c",
+            "main.h": "c",
+            "cmd_task.h": "c",
+            "projectheader.h": "c",
+            "callback.h": "c",
+            "gyro_task.h": "c",
+            "stdint.h": "c"
         }
     },
     "extensions": {}

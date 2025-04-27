@@ -1,5 +1,5 @@
-#ifndef __GYRO_TASK_H__
-#define __GYRO_TASK_H__
+#ifndef __CMD_TASK_H__
+#define __CMD_TASK_H__
 
 #include "FreeRTOS.h"
 #include "task.h"
@@ -11,14 +11,13 @@
 #include "Motor_Task.h"
 #include "Chassis.h"
 #include "Chassis_Task.h"
-
 #include "ProjectHeader.h"
 
-extern TaskHandle_t Gyro_TaskHandle;
-void Gyro_Task(void *argument);
+#define CMD_2_4G_UART           &huart3
 
-extern int16_t roll;
-extern int16_t pitch;
-extern int16_t yaw;
+#define PACKET_SIZE 7
+
+extern TaskHandle_t CmdFrom2_4G_TaskHandle;
+void CmdFrom2_4G_Task(void *argument);
 
 #endif

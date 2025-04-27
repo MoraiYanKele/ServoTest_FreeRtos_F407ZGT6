@@ -46,6 +46,7 @@
 "servotest_freertos_f407zgt6\motor_task.o"
 "servotest_freertos_f407zgt6\chassis_task.o"
 "servotest_freertos_f407zgt6\gyro_task.o"
+"servotest_freertos_f407zgt6\cmd_task.o"
 "..\Middlewares\ST\ARM\DSP\Lib\arm_cortexM4lf_math.lib"
 --strict --scatter "ServoTest_FreeRtos_F407ZGT6\ServoTest_FreeRtos_F407ZGT6.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols

@@ -231,6 +231,9 @@
           },
           {
             "path": "Task/Src/Gyro_Task.c"
+          },
+          {
+            "path": "Task/Src/Cmd_Task.c"
           }
         ],
         "folders": []

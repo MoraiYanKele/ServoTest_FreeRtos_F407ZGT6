@@ -4,6 +4,8 @@
 #include "main.h"
 #include "Motor.h"
 #include "Motor_Task.h"
+#include "ProjectHeader.h"
+#include "chassis_Task.h"
 
 #define LIMIT_MAGNITUDE(value, low, high) \
         ((value) < (low) ? (low) : ((value) > (high) ? (high) : (value)))
@@ -49,6 +51,8 @@ typedef struct ChassisTypeDef
 
   float targetPosX;
   float targetPosY;
+
+  float softStartFactor; // 软启动系数
     
 } ChassisTypeDef;
 

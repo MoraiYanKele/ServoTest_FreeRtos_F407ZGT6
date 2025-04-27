@@ -49,6 +49,8 @@ servotest_freertos_f407zgt6/callback.o: ..\Core\Src\CallBack.c \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\mpu_wrappers.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h \
-  ..\User\Inc\Motor.h ..\User\Inc\pid.h ..\Task\Inc\VOFA_Task.h \
-  ..\User\Inc\Chassis.h ..\Task\Inc\Gyro_Task.h \
-  ..\Task\Inc\Chassis_Task.h
+  ..\User\Inc\Motor.h ..\User\Inc\pid.h ..\Core\Inc\ProjectHeader.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\queue.h \
+  ..\Task\Inc\VOFA_Task.h ..\User\Inc\Chassis.h \
+  ..\Task\Inc\chassis_Task.h ..\Task\Inc\Gyro_Task.h \
+  ..\Task\Inc\VOFAQUeueType.h

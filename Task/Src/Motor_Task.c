@@ -112,6 +112,7 @@ void Moto1_Task(void *argument)
     uint32_t notificationValue = ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
     if (notificationValue > 0)
     {
+      // GetEncoder(&motor1);
       motor1.speed = (float)(motor1.encoder) * SPEED_FACTOR;
       motor1.position += (float)(motor1.encoder) * DISTENCE_FACTOR; // 计算位置，单位为mm
       PIDSetSpeed(&motor1, motor1.targetSpeed);
@@ -129,8 +130,9 @@ void Moto2_Task(void *argument)
     uint32_t notificationValue = ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
     if (notificationValue > 0)
     {
+      // GetEncoder(&motor2);
       motor2.speed = (float)(motor2.encoder) * SPEED_FACTOR;
-      motor1.position += (float)(motor2.encoder) * DISTENCE_FACTOR; // 计算位置，单位为mm
+      motor2.position += (float)(motor2.encoder) * DISTENCE_FACTOR; // 计算位置，单位为mm
       PIDSetSpeed(&motor2, motor2.targetSpeed);
     };
   }
@@ -146,8 +148,9 @@ void Moto3_Task(void *argument)
     uint32_t notificationValue = ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
     if (notificationValue > 0)
     {
+      // GetEncoder(&motor3);
       motor3.speed = (float)(motor3.encoder) * SPEED_FACTOR;
-      motor1.position += (float)(motor3.encoder) * DISTENCE_FACTOR; // 计算位置，单位为mm
+      motor3.position += (float)(motor3.encoder) * DISTENCE_FACTOR; // 计算位置，单位为mm
       PIDSetSpeed(&motor3, motor3.targetSpeed);
     };
   }
@@ -160,11 +163,12 @@ void Moto4_Task(void *argument)
   SpeedPID_Init(&motor4, 1.5, 10, 0.0);
   while (1)
   {
+    // GetEncoder(&motor4);
     uint32_t notificationValue = ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
     if (notificationValue > 0)
     {
       motor4.speed = (float)(motor4.encoder) * SPEED_FACTOR;
-      motor1.position += (float)(motor4.encoder) * DISTENCE_FACTOR; // 计算位置，单位为mm
+      motor4.position += (float)(motor4.encoder) * DISTENCE_FACTOR; // 计算位置，单位为mm
       PIDSetSpeed(&motor4, motor4.targetSpeed);
     };
   }
