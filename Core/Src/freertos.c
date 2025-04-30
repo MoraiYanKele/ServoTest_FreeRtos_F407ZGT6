@@ -126,7 +126,7 @@ void MX_FREERTOS_Init(void) {
   xTaskCreate(Chassis_Task, "Chassis_Task", 256, NULL, osPriorityNormal, &Chassis_TaskHandle);
   xTaskCreate(VOFA_Task, "VOFA_Task", 256, NULL, osPriorityNormal, &VOFA_TaskHandle);
 
-  xTaskCreate(CmdFrom2_4G_Task, "CmdFrom2_4G_Task", 256, NULL, osPriorityNormal, &CmdFrom2_4G_TaskHandle);
+  xTaskCreate(Cmd_Task, "Cmd_Task", 256, NULL, osPriorityNormal, &Cmd_TaskHandle);
   // xTaskCreate(Gyro_Task, "Gyro_Task", 256, NULL, osPriorityNormal, &Gyro_TaskHandle);
   // xTaskCreate(MotorEncoder_Task, "MotorEncoder_Task", 512, NULL, osPriorityNormal1, &MotorEncoder_TaskHandle);
 

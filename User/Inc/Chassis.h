@@ -11,6 +11,9 @@
         ((value) < (low) ? (low) : ((value) > (high) ? (high) : (value)))
 #define  MOTROR_SPEED_LIMIT     100.0f // 电机最大速度
 
+#define COS_45      0.70710678118
+#define L           0.11f
+
 typedef struct 
 {
     float vX;   // x方向速度（左右）
@@ -58,8 +61,11 @@ typedef struct ChassisTypeDef
 
 void Chassis_Init(ChassisTypeDef* chassis);
 void OmniWheelKinematics(ChassisTypeDef* chassis);
+void OmniWheelKinematics_FourWheel(ChassisTypeDef* chassis);
 void SetChassisSpeed(ChassisTypeDef* chassis);
+void SetChassisSpeed_WithoutPID(ChassisTypeDef* chassis);
 void GetDistance(ChassisTypeDef* chassis);
+void GetDistance_FourWheel(ChassisTypeDef* chassis);
 void Chassis_GetEncoder(ChassisTypeDef* chassis);
 
 

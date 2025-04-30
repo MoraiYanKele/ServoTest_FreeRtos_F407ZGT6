@@ -78,9 +78,22 @@ void OmniWheelKinematics(ChassisTypeDef* chassis)
   float vW = chassis->chassisSpeed->vW;
 
   chassis->wheelSpeed->vA = -vX;
-  chassis->wheelSpeed->vA = -vY;
-  chassis->wheelSpeed->vA = vX;
-  chassis->wheelSpeed->vA = vY;
+  chassis->wheelSpeed->vB = -vY;
+  chassis->wheelSpeed->vC = vX;
+  chassis->wheelSpeed->vD = vY;
+}
+
+void OmniWheelKinematics_FourWheel(ChassisTypeDef* chassis)
+{
+  float vx_term = chassis->chassisSpeed->vX * COS_45;
+  float vy_term = chassis->chassisSpeed->vY * COS_45;
+  float w_term  = L * chassis->chassisSpeed->vW;
+  
+  chassis->wheelSpeed->vA = -vx_term + vy_term + w_term; // 左前轮
+  chassis->wheelSpeed->vB = -vx_term - vy_term + w_term;  // 右前轮
+  chassis->wheelSpeed->vC = vx_term - vy_term + w_term; // 左后轮
+  chassis->wheelSpeed->vD = vx_term + vy_term + w_term;  // 右后轮
+
 }
 
 void SetChassisSpeed(ChassisTypeDef* chassis)
@@ -90,16 +103,42 @@ void SetChassisSpeed(ChassisTypeDef* chassis)
   float pidoutputTargetSpeedC = -PIDCompute(chassis->positionPidX, -chassis->motorC->position, chassis->targetPosX);
   float pidoutputTargetSpeedD = PIDCompute(chassis->positionPidY, chassis->motorD->position, chassis->targetPosY);
 
-  chassis->motorA->targetSpeed = pidoutputTargetSpeedA * chassis->softStartFactor;
-  chassis->motorB->targetSpeed = pidoutputTargetSpeedB * chassis->softStartFactor;
-  chassis->motorC->targetSpeed = pidoutputTargetSpeedC * chassis->softStartFactor;
-  chassis->motorD->targetSpeed = pidoutputTargetSpeedD * chassis->softStartFactor;
+  // chassis->motorA->targetSpeed = pidoutputTargetSpeedA * chassis->softStartFactor;
+  // chassis->motorB->targetSpeed = pidoutputTargetSpeedB * chassis->softStartFactor;
+  // chassis->motorC->targetSpeed = pidoutputTargetSpeedC * chassis->softStartFactor;
+  // chassis->motorD->targetSpeed = pidoutputTargetSpeedD * chassis->softStartFactor;
+
+  chassis->motorA->targetSpeed = pidoutputTargetSpeedA;
+  chassis->motorB->targetSpeed = pidoutputTargetSpeedB;
+  chassis->motorC->targetSpeed = pidoutputTargetSpeedC;
+  chassis->motorD->targetSpeed = pidoutputTargetSpeedD;
+
+}
+
+void SetChassisSpeed_WithoutPID(ChassisTypeDef* chassis)
+{
+  chassis->motorA->targetSpeed = chassis->wheelSpeed->vA * chassis->softStartFactor;
+  chassis->motorB->targetSpeed = chassis->wheelSpeed->vB * chassis->softStartFactor;
+  chassis->motorC->targetSpeed = chassis->wheelSpeed->vC * chassis->softStartFactor;
+  chassis->motorD->targetSpeed = chassis->wheelSpeed->vD * chassis->softStartFactor;
 }
 
 void GetDistance(ChassisTypeDef* chassis)
 {
   chassis->chassisDistance->distanceX = (chassis->motorA->position - chassis->motorC->position) / 2;
   chassis->chassisDistance->distanceY = (-chassis->motorB->position + chassis->motorD->position) / 2; 
+}
+
+void GetDistance_FourWheel(ChassisTypeDef* chassis)
+{
+  float posA = chassis->motorA->position;
+  float posB = chassis->motorB->position;
+  float posC = chassis->motorC->position;
+  float posD = chassis->motorD->position;
+
+  // 根据正向运动学公式计算底盘位移
+  chassis->chassisDistance->distanceX =(-posA - posB + posC + posD) / (4 * COS_45);
+  chassis->chassisDistance->distanceY = ( posA - posB - posC + posD) / (4 * COS_45);
 }
 void Chassis_GetEncoder(ChassisTypeDef* chassis)
 {

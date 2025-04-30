@@ -33,7 +33,8 @@ typedef enum
   TASK1_MOVING_X          = 0x01,     // 正在移动到当前目标点的 X 坐标
   TASK1_MOVING_Y          = 0x02,     // 正在移动到当前目标点的 Y 坐标
   TASK1_REACH_PROCESSING  = 0x03,     // 到达任务点后处理
-  TASK1_COMPLETE          = 0x04      // 所有点都已到达
+  TASK1_WAITING_QR_RESULT = 0x04, // 等待二维码结果
+  TASK1_COMPLETE          = 0x05      // 所有点都已到达
 } GoThroughTypeDef;
 
 typedef struct {

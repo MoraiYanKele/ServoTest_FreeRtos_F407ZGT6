@@ -30,21 +30,18 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
   if (huart == CMD_2_4G_UART)
   {
     VOFA_SendFireWater("receive\n"); // 发送接收成功指令
-    vTaskNotifyGiveFromISR(CmdFrom2_4G_TaskHandle, &xHigherPriorityTaskWoken);
+    xTaskNotifyFromISR(Cmd_TaskHandle, NOTIFY_FROM_CMD_2_4G_UART_ISR, eSetBits, &xHigherPriorityTaskWoken);
+    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+  }
+
+  if (huart == CMD_CAMERA_UART)
+  {
+    xTaskNotifyFromISR(Cmd_TaskHandle, NOTIFY_FROM_CMD_CAMERA_UART_ISR, eSetBits, &xHigherPriorityTaskWoken);
     portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
   }
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-  BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-  if (huart == &huart5)
-  {
-   
-    vTaskNotifyGiveFromISR(Gyro_TaskHandle, &xHigherPriorityTaskWoken);
-
-    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-  }
-
   
 }
