@@ -54,4 +54,6 @@ servotest_freertos_f407zgt6/gyro_task.o: ..\Task\Src\Gyro_Task.c \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\queue.h \
   ..\User\Inc\Chassis.h ..\Task\Inc\Motor_Task.h \
   ..\Core\Inc\ProjectHeader.h ..\Task\Inc\Chassis_Task.h \
-  ..\Task\Inc\VOFAQUeueType.h
+  ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h \
+  ..\Task\Inc\Cmd_Task.h ..\Task\Inc\VOFAQUeueType.h

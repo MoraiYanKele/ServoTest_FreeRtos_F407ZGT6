@@ -15,7 +15,9 @@
             "vofa_task.h": "c",
             "limits.h": "c",
             "motor.h": "c",
-            "motor_task.h": "c"
+            "motor_task.h": "c",
+            "math.h": "c",
+            "task.h": "c"
         }
     },
     "extensions": {}

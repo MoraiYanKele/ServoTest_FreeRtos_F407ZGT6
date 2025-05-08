@@ -56,6 +56,9 @@
 TaskHandle_t Init_TaskHandle = NULL;
 
 QueueHandle_t vofaQueue = NULL; // 声明队列句柄
+QueueHandle_t gyroYawQueue = NULL; // 声明队列句柄
+QueueHandle_t microphoneQueue = NULL; // 声明队列句柄
+QueueHandle_t cameraQueue = NULL; // 声明队列句柄
 
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
@@ -106,6 +109,9 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   vofaQueue = xQueueCreate(10, sizeof(VOFAQueueTypeDef));
+  gyroYawQueue = xQueueCreate(1, sizeof(float));
+  microphoneQueue = xQueueCreate(3, sizeof(MicrophoneTypeDef)); // 创建麦克风队列
+  cameraQueue = xQueueCreate(3, sizeof(uint8_t)); // 创建摄像头队列 
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
@@ -114,21 +120,15 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
-  xTaskCreate(Init_Task, "Init_Task", 128, NULL, osPriorityHigh, &Init_TaskHandle);
-
+  xTaskCreate(Init_Task, "Init_Task", 128, NULL, osPriorityRealtime, &Init_TaskHandle);
   xTaskCreate(VOFA_RxCallBack_Task, "VOFA_RxCallBack_Task", 256, NULL, osPriorityNormal1, &VOFA_RxCallBack_TaskHandle);
-
-  xTaskCreate(Moto1_Task, "Moto1_Task", 256, NULL, osPriorityNormal, &Motor1_TaskHandle);
-  xTaskCreate(Moto2_Task, "Moto2_Task", 256, NULL, osPriorityNormal, &Motor2_TaskHandle);
-  xTaskCreate(Moto3_Task, "Moto3_Task", 256, NULL, osPriorityNormal, &Motor3_TaskHandle);
-  xTaskCreate(Moto4_Task, "Moto4_Task", 256, NULL, osPriorityNormal, &Motor4_TaskHandle);
-
-  xTaskCreate(Chassis_Task, "Chassis_Task", 256, NULL, osPriorityNormal, &Chassis_TaskHandle);
+  xTaskCreate(Moto1_Task, "Moto1_Task", 128, NULL, osPriorityHigh, &Motor1_TaskHandle);
+  xTaskCreate(Moto2_Task, "Moto2_Task", 128, NULL, osPriorityHigh, &Motor2_TaskHandle);
+  xTaskCreate(Moto3_Task, "Moto3_Task", 128, NULL, osPriorityHigh, &Motor3_TaskHandle);
+  xTaskCreate(Moto4_Task, "Moto4_Task", 128, NULL, osPriorityHigh, &Motor4_TaskHandle);
+  xTaskCreate(Chassis_Task, "Chassis_Task", 512, NULL, osPriorityNormal, &Chassis_TaskHandle);
   xTaskCreate(VOFA_Task, "VOFA_Task", 256, NULL, osPriorityNormal, &VOFA_TaskHandle);
-
   xTaskCreate(Cmd_Task, "Cmd_Task", 256, NULL, osPriorityNormal, &Cmd_TaskHandle);
-  // xTaskCreate(Gyro_Task, "Gyro_Task", 256, NULL, osPriorityNormal, &Gyro_TaskHandle);
-  // xTaskCreate(MotorEncoder_Task, "MotorEncoder_Task", 512, NULL, osPriorityNormal1, &MotorEncoder_TaskHandle);
 
   /* USER CODE END RTOS_THREADS */
 

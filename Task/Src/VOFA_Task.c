@@ -5,6 +5,7 @@ TaskHandle_t VOFA_RxCallBack_TaskHandle = NULL;
 TaskHandle_t VOFA_TaskHandle = NULL;
 extern QueueHandle_t vofaQueue; // 声明队列句柄
 extern ChassisTypeDef chassis; // 声明底盘结构体
+extern uint8_t qrNumberInTask1; // 声明二维码处理标志
 
 void VOFA_RxCallBack_Task(void *argument)
 {
@@ -24,38 +25,30 @@ void VOFA_RxCallBack_Task(void *argument)
 void VOFA_Task(void *argument)
 {
   VOFA_SendFireWater("ready\n"); // 发送准备就绪指令
-  // VOFA_RegisterData_float("targetPosX", &chassis.targetPosX);
-  // VOFA_RegisterData_float("targetPosY", &chassis.targetPosY);
-  // // VOFA_RegisterData_float("chassisSpeedW", &chassis.chassisSpeed->vW);
-  // VOFA_RegisterData_float("kp", &chassis.positionPidX->Kp);
-  // VOFA_RegisterData_float("ki", &chassis.positionPidX->Ki);
-  // VOFA_RegisterData_float("kd", &chassis.positionPidX->Kd);
+  VOFA_RegisterData_float("targetPosW", &chassis.targetPosW); // 发送目标位置
+  VOFA_RegisterData_float("softStartFactor", &chassis.softStartFactor);// 发送软启动系数
+  VOFA_RegisterData_float("kp", &chassis.positionPidW->Kp); // 发送PID参数
+  VOFA_RegisterData_float("ki", &chassis.positionPidW->Ki); // 发送PID参数
+  VOFA_RegisterData_float("kd", &chassis.positionPidW->Kd); // 发送PID参数
+
 
   while (1)
   {
-    // VOFA_SendJustFloat(14,       
-    //   // chassis.chassisSpeed->vX,
-    //   // chassis.chassisSpeed->vY,
-    //   // chassis.chassisSpeed->vW,
-    //   chassis.positionPidX->Kp,
-    //   chassis.positionPidX->Ki,
-    //   chassis.targetPosX,
-    //   chassis.targetPosY,
+    // VOFA_SendJustFloat(6,
+    //   chassis.chassisDistance->distanceX,
+    //   chassis.chassisSpeed->vX,
     //   chassis.motorA->speed,
     //   chassis.motorB->speed,
-    //   chassis.motorC->speed,
-    //   chassis.motorD->speed,
-    //   chassis.motorA->position,
-    //   chassis.motorB->position,
-    //   chassis.motorC->position,
-    //   chassis.motorD->position,
-    //   chassis.chassisDistance->distanceX,
-    //   chassis.chassisDistance->distanceY);
-    // // VOFAQueueTypeDef vofaQueueReceive;
-    // // if (xQueueReceive(vofaQueue, &vofaQueueReceive, portMAX_DELAY) == pdTRUE)
-    // // {
-    // //   VOFA_SendJustFloat_Queue(vofaQueueReceive.data, vofaQueueReceive.dataLength); // 发送数据
-    // // }
+    //   chassis.motorC->speed,d
+    //   chassis.motorD->speed
+    // );
+    // VOFA_SendJustFloat(4, chassis.yaw, chassis.targetPosW, chassis.chassisSpeed->vW, chassis.wheelSpeed->vA); // 发送当前角度和目标角度
+
+    // VOFA_SendFireWater("yaw: %f, %f\n", chassis.yaw, chassis.targetPosW);
+    vTaskDelay(pdMS_TO_TICKS(10)); //
+
+
+
   }
 }
 

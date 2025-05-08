@@ -8,5 +8,6 @@
 #include "VOFA_Task.h"
 #include "Gyro_Task.h"
 #include "ProjectHeader.h"
+#include "Cmd_Task.h"
 
 #endif

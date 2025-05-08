@@ -24,6 +24,7 @@ ChassisDistanceTypeDef chassisDistance =
 
 PIDControllerTypedef positionPidForX;
 PIDControllerTypedef positionPidForY;
+PIDControllerTypedef positionPidForW;
 
 ChassisTypeDef chassis = 
 {
@@ -37,7 +38,8 @@ ChassisTypeDef chassis =
   .chassisDistance = &chassisDistance,
 
   .positionPidX = &positionPidForX,
-  .positionPidY = &positionPidForY
+  .positionPidY = &positionPidForY,
+  .positionPidW = &positionPidForW
 };
 
 void Chassis_Init(ChassisTypeDef* chassis)
@@ -45,6 +47,7 @@ void Chassis_Init(ChassisTypeDef* chassis)
 
   chassis->targetPosX = 0;
   chassis->targetPosY = 0;
+  chassis->targetPosW = 0; // 目标角度
 
   chassis->motorA->targetSpeed = 0;
   chassis->motorB->targetSpeed = 0;
@@ -69,6 +72,8 @@ void Chassis_Init(ChassisTypeDef* chassis)
   chassis->chassisDistance->distanceY = 0;
 
   chassis->softStartFactor = 0.0f; // 软启动系数
+
+  chassis->yaw = 0; // 陀螺仪 yaw 角度
 }
 
 void OmniWheelKinematics(ChassisTypeDef* chassis)
@@ -87,13 +92,12 @@ void OmniWheelKinematics_FourWheel(ChassisTypeDef* chassis)
 {
   float vx_term = chassis->chassisSpeed->vX * COS_45;
   float vy_term = chassis->chassisSpeed->vY * COS_45;
-  float w_term  = L * chassis->chassisSpeed->vW;
+  float w_term  = L * -chassis->chassisSpeed->vW;
   
   chassis->wheelSpeed->vA = -vx_term + vy_term + w_term; // 左前轮
   chassis->wheelSpeed->vB = -vx_term - vy_term + w_term;  // 右前轮
   chassis->wheelSpeed->vC = vx_term - vy_term + w_term; // 左后轮
   chassis->wheelSpeed->vD = vx_term + vy_term + w_term;  // 右后轮
-
 }
 
 void SetChassisSpeed(ChassisTypeDef* chassis)
@@ -121,6 +125,11 @@ void SetChassisSpeed_WithoutPID(ChassisTypeDef* chassis)
   chassis->motorB->targetSpeed = chassis->wheelSpeed->vB * chassis->softStartFactor;
   chassis->motorC->targetSpeed = chassis->wheelSpeed->vC * chassis->softStartFactor;
   chassis->motorD->targetSpeed = chassis->wheelSpeed->vD * chassis->softStartFactor;
+
+    // chassis->motorA->targetSpeed = chassis->wheelSpeed->vA;
+    // chassis->motorB->targetSpeed = chassis->wheelSpeed->vB;
+    // chassis->motorC->targetSpeed = chassis->wheelSpeed->vC;
+    // chassis->motorD->targetSpeed = chassis->wheelSpeed->vD;
 }
 
 void GetDistance(ChassisTypeDef* chassis)

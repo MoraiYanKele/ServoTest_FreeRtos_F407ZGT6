@@ -52,4 +52,6 @@ servotest_freertos_f407zgt6/vofa_task.o: ..\Task\Src\VOFA_Task.c \
   ..\User\Inc\Chassis.h ..\User\Inc\Motor.h ..\Core\Inc\tim.h \
   ..\User\Inc\pid.h ..\Task\Inc\Motor_Task.h ..\Core\Inc\ProjectHeader.h \
   ..\Task\Inc\Chassis_Task.h ..\Task\Inc\Gyro_Task.h \
-  ..\Task\Inc\VOFAQUeueType.h
+  ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h \
+  ..\Task\Inc\Cmd_Task.h ..\Task\Inc\VOFAQUeueType.h

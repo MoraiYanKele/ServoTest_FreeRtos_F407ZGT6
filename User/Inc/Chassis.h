@@ -51,11 +51,15 @@ typedef struct ChassisTypeDef
 
   PIDControllerTypedef *positionPidX;
   PIDControllerTypedef *positionPidY;
+  PIDControllerTypedef *positionPidW;
 
   float targetPosX;
   float targetPosY;
+  float targetPosW; // 目标角度
 
   float softStartFactor; // 软启动系数
+
+  float yaw; // 陀螺仪 yaw 角度
     
 } ChassisTypeDef;
 

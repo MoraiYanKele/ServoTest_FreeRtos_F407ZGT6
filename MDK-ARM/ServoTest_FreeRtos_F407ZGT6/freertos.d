@@ -53,4 +53,5 @@ servotest_freertos_f407zgt6/freertos.o: ..\Core\Src\freertos.c \
   ..\User\Inc\Motor.h ..\Core\Inc\tim.h ..\User\Inc\pid.h \
   ..\Task\Inc\VOFA_Task.h ..\User\Inc\Chassis.h ..\Task\Inc\Motor_Task.h \
   ..\Core\Inc\ProjectHeader.h ..\Task\Inc\Chassis_Task.h \
-  ..\Task\Inc\Gyro_Task.h ..\Task\Inc\VOFAQUeueType.h
+  ..\Task\Inc\Gyro_Task.h ..\Task\Inc\Cmd_Task.h \
+  ..\Task\Inc\VOFAQUeueType.h
